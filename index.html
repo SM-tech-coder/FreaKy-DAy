@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreaKy DAy Competitions</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1, h2, p {
+      margin: 20px;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+    }
+    .button {
+      display: inline-block;
+      margin: 20px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      color: #fff;
+      background: red;
+      border: none;
+      cursor: pointer;
+      text-shadow: 0 0 10px #000;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .button:hover {
+      background: #ff4040;
+      transform: scale(1.1);
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: Welcome Page -->
+  <div id="page1">
+    <h1>Welcome to FreaKy DAy Competitions!</h1>
+    <p>Are you ready to challenge yourself? Enter the most exciting online competition you've ever seen!</p>
+    <button class="button" onclick="goToPage(2)">Start Now</button>
+  </div>
+
+  <!-- Page 2: Registration Form -->
+  <div id="page2" class="hidden">
+    <h1>Register Now</h1>
+    <form id="registrationForm">
+      <input type="text" id="name" placeholder="Enter your name" required><br><br>
+      <input type="email" id="email" placeholder="Enter your email" required><br><br>
+      <button type="submit" class="button">Let’s Begin!</button>
+    </form>
+  </div>
+
+  <!-- Page 3: Suspense Page 1 -->
+  <div id="page3" class="hidden">
+    <h1>You're In!</h1>
+    <p>Hi <span id="userName"></span>, brace yourself! Your skills will soon be put to the ultimate test.</p>
+    <button class="button" onclick="goToPage(4)">Continue</button>
+  </div>
+
+  <!-- Page 4: Suspense Page 2 -->
+  <div id="page4" class="hidden">
+    <h1>The Final Step</h1>
+    <p>Only a few have made it this far! Stay tuned...</p>
+    <button class="button" onclick="goToPage(5)">Reveal</button>
+  </div>
+
+  <!-- Page 5: The Reveal -->
+  <div id="page5" class="hidden">
+    <h1>Congratulations! But...</h1>
+    <p>There is no competition! 😂 Close this website, take some rest, and enjoy your day!</p>
+  </div>
+
+  <script>
+    function goToPage(pageNumber) {
+      // Hide all pages
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`page${i}`).classList.add('hidden');
+      }
+      // Show the target page
+      document.getElementById(`page${pageNumber}`).classList.remove('hidden');
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent form submission
+
+      const name = document.getElementById('name').value;
+      localStorage.setItem('name', name); // Save name to localStorage
+
+      goToPage(3); // Navigate to Page 3
+
+      // Display the name on Page 3
+      document.getElementById('userName').textContent = name;
+    });
+
+    // On page load, prefill the name if available
+    window.onload = function () {
+      const savedName = localStorage.getItem('name');
+      if (savedName) {
+        document.getElementById('userName').textContent = savedName;
+      }
+    };
+  </script>
+
+</body>
+</html>
